@@ -1,0 +1,480 @@
+% Created 2019-09-16 Пн 01:44
+% Intended LaTeX compiler: pdflatex
+\documentclass[11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{graphicx}
+\usepackage{grffile}
+\usepackage{longtable}
+\usepackage{wrapfig}
+\usepackage{rotating}
+\usepackage[normalem]{ulem}
+\usepackage{amsmath}
+\usepackage{textcomp}
+\usepackage{amssymb}
+\usepackage{capt-of}
+\usepackage{hyperref}
+\usepackage[T2A]{fontenc}
+\usepackage[a4paper,left=3cm,top=2cm,right=1.5cm,bottom=2cm,marginparsep=7pt,marginparwidth=.6in]{geometry}
+\usepackage{cmap}
+\usepackage[russian]{babel}
+\usepackage{xcolor}
+\usepackage{listings}
+\usepackage{makecell}
+\author{Krutko Nikita / KrutNA}
+\date{\today}
+\title{}
+\hypersetup{
+ pdfauthor={Krutko Nikita / KrutNA},
+ pdftitle={},
+ pdfkeywords={},
+ pdfsubject={},
+ pdfcreator={Emacs 26.1 (Org mode 9.1.9)}, 
+ pdflang={Russian}}
+\begin{document}
+
+\large
+\thispagestyle{empty}
+\begin{center}
+\textbf{Санкт-Петербургский Национальный Исследовательский}\\
+\textbf{Университет Информационных Технологий, Механики и Оптики}\\
+\textbf{Факультет Программной Инженерии и Компьютерной Техники}\\
+\end{center}
+\vspace{1em}
+\begin{center}
+\includegraphics[width=120px]{../itmo-logo.png}
+\end{center}
+\LARGE
+\vspace{5em}
+\begin{center}
+\textbf{Вариант №27}\\
+\textbf{Лабораторная работа №1}\\
+\Large
+\textbf{по дисциплине}\\
+\LARGE
+\textbf{\emph{'Информатика'}}\\
+\end{center}
+\vspace{11em}
+\large
+\begin{flushright}
+\textbf{Выполнил:}\\
+\textbf{Студент группы P3113}\\
+\textbf{\emph{Крутько Никита;} : 242570}\\
+\textbf{Преподаватель:}\\
+\textbf{\emph{Малышева Татьяна Алексеевна}}\\
+\end{flushright}
+\vspace{4em}
+\large
+\begin{center}
+\textbf{Санкт-Петербург 2019 г.}
+\end{center}
+\pagebreak{}
+\setcounter{tocdepth}{2}
+\tableofcontents
+\pagebreak{}
+\section{Описание}
+\label{sec:org5c5aad7}
+\subsection{Задание}
+\label{sec:org0e616a7}
+Перевести число "А", заданное в системе счисления "В", в систему счисления "С". Числа "А", "В" и "С" взять из представленных ниже таблиц. Вариант выбирается как сумма последнего числа в номере группы и номера в списке группы согласно ISU. Т.е. 13-му человеку из группы P3102 соответствует 15-й вариант (=2 + 13).
+\subsection{Правила}
+\label{sec:org2c4c1ae}
+Всего нужно решить 11 примеров. Для примеров с 5-го по 7-й выполнить операцию перевода по сокращенному правилу (для систем с основанием 2 в системы с основанием 2\(^{\text{k}}\)). Для примеров с 4-го по 6-й и с 8-го по 9-й найти ответ с точностью до 5 знака после запятой. В примере 11 группа символов \(\overline{1}\) означает -1 в симметричной системе счисления
+\section{Задание 1}
+\label{sec:org88f8898}
+\subsection{Задание:}
+\label{sec:org0127e83}
+\begin{center}
+\begin{tabular}{|r|rrr|}
+\hline
+\# & A & B & C\\
+\hline
+27 & 25307 & 10 & 9\\
+\hline
+\end{tabular}
+\end{center}
+
+\subsection{Решение}
+\label{sec:orge168d0d}
+Найти: 25307\(_{\text{10}}\) = ?\(_{\text{9}}\) \\
+\begin{center}
+\(\arraycolsep=0.05em
+\begin{array}{rrrrr@{\,}r|rrrr@{\,}r|rrr@{\,}r|rr@{\,}r|r}
+2 & 5 & 3 & 0 & 7 &&\, 9 \\
+\cline{7-10}
+1 & 8 &&&& &        \, 2 & 8 & 1 & 1 &&\, 9\\
+\cline{1-3}\cline{12-15}
+&   7 & 3 &&&&         2 & 7 &&&&      \, 3 & 1 & 2 &&\, 9\\
+\cline{7-9}\cline{16-16}
+&   7 & 2 &&&&&            1 & 1 &&&      2 & 7 &&&   \, 3 & 4 &&\, 9\\
+\cline{2-4}\cline{12-14}\cline{18-19}
+&&      1 & 0 &&&&&            9 &&&&         4 & 2 &&   2 & 7 &&\, \textbf{3}\\
+\cline{8-10}\cline{16-17}
+&&&         9 &&&&&            2 & 1 &&&      3 & 6 &&&\textbf{7}\\
+\cline{3-5}\cline{13-14}
+&&&         1 & 7 &&&&         1 & 8 &&&& \textbf{6}\\
+\cline{9-10}
+&&&&            9 &&&&&    \textbf{3}\\
+\cline{4-5}
+&&&&    \textbf{8}\\
+\end{array}\)
+\end{center}
+
+Из чего получаем, что: 25307\(_{\text{10}}\) = \textbf{37638\(_{\text{9}}\)}
+
+\section{Задание 2}
+\label{sec:orgbf80c82}
+\subsection{Задание}
+\label{sec:orgf47a5b9}
+\begin{center}
+\begin{tabular}{|r|rrr|}
+\hline
+\# & A & B & C\\
+\hline
+27 & 10053 & 7 & 10\\
+\hline
+\end{tabular}
+\end{center}
+
+\subsection{Решение}
+\label{sec:org7e3779d}
+Найти: 10053\(_{\text{7}}\) = ?\(_{\text{10}}\) \\
+\(\overset{4}{1}\overset{3}{0}\overset{2}{0}\overset{1}{5}\overset{0}{7}_7 =
+1 * 7^4 + 0 * 7^3 + 0 * 7^2 + 5 * 7^1 + 7 * 7^0 =
+2401 + 0 + 0 + 35 + 3 =
+2439_{10}\)
+Из чего получаем, что: 10053\(_{\text{7}}\) = \textbf{2439\(_{\text{10}}\)}
+
+\section{Задание 3}
+\label{sec:orga4d4121}
+\subsection{Задание}
+\label{sec:org741e4a8}
+\begin{center}
+\begin{tabular}{|r|rrr|}
+\hline
+\# & A & B & C\\
+\hline
+27 & 28D10 & 15 & 5\\
+\hline
+\end{tabular}
+\end{center}
+
+\subsection{Решение}
+\label{sec:org79627d7}
+Найти: 28D10\(_{\text{15}}\) = ?\(_{\text{5}}\) \\
+\(\overset{4}{2}\overset{3}{8}\overset{2}{D}\overset{1}{1}\overset{0}{0}_{15} = 
+2 * 15^4 + 8 * 15^3 + 13 * 15^2 + 1 * 15^1 + 0 * 15^0 =
+101250 + 27000 + 2925 + 15 + 0 =
+131190_{10}\) 
+\begin{center}
+\(\arraycolsep=0.05em
+\begin{array}{rrrrrr@{\,}r|rrrrr@{\,}r|rrrr@{\,}r|rrrr@{\,}r|rrr@{\,}r|rr@{\,}r|r@{\,}r|r@{\,}r|r}
+1 & 3 & 1 & 1 & 9 & 0 &&\, 5 \\
+\cline{8-12}
+1 & 0 &&&&&&            \, 2 & 6 & 2 & 3 & 8 &&\, 5 \\
+\cline{1-3}\cline{14-17}
+&   3 & 1 &&&&&            2 & 5 &&&&&         \, 5 & 2 & 4 & 7 &&\, 5 \\
+\cline{8-10}\cline{19-23}
+&   3 & 0 &&&&&&               1 & 2 &&&&         5 &&&&&         \, 1 & 0 & 4 & 9 &&\, 5 \\
+\cline{2-4}\cline{14-16}\cline{24-26}
+&&      1 & 1 &&&&&            1 & 0  &&&&&           2 & 4 &&&      1 & 0 &&&&      \, 2 & 0 & 9 &&\, 5 \\
+\cline{9-11}\cline{19-22}\cline{28-29}
+&&      1 & 0 &&&&&&               2 & 3 &&&&         2 & 0 &&&&&            4 & 9 &&   2 & 0 &&&   \, 4 & 1 &&\, 5 \\
+\cline{3-5}\cline{15-17}\cline{24-26}\cline{31-31}
+&&&         1 & 9 &&&&&            2 & 0 &&&&&            4 & 7 &&&&         4 & 9 &&&&         9 &&\, 4 & 0 &&\, 8 &&\, 5 \\
+\cline{10-12}\cline{21-22}\cline{28-29}\cline{33-33}
+&&&         1 & 5 &&&&&&               3 & 8 &&&&         4 & 5 &&&&&    \textbf{4} &&&&        5 &&&\textbf{1}&& 5 &&\, \textbf{1} \\
+\cline{4-6}\cline{16-17}\cline{26-26}\cline{31-31}
+&&&&            4 & 0 &&&&&            3 & 5 &&&&&    \textbf{2} &&&&&&&&&              \textbf{4} &&&&&      \textbf{3} \\
+\cline{11-12}
+&&&&            4 & 0 &&&&&&       \textbf{3}\\
+\cline{5-7}
+&&&&&       \textbf{0} 
+\end{array}\)
+\end{center}
+Из чего получаем, что 28D10\(_{\text{15}}\) = \textbf{1344230\(_{\text{5}}\)}
+
+\section{Задание 4}
+\label{sec:org6f5e6f9}
+\subsection{Задание}
+\label{sec:org725aef3}
+\begin{center}
+\begin{tabular}{|r|rrr|}
+\hline
+\# & A & B & C\\
+\hline
+27 & 52.16 & 10 & 2\\
+\hline
+\end{tabular}
+\end{center}
+
+\subsection{Решение}
+\label{sec:orgd29cd8e}
+Найти: 52.16\(_{\text{10}}\) = ?\(_{\text{2}}\)
+\begin{center}
+\begin{tabular}{ p{200pt} p{200pt} }
+\makecell{
+$\arraycolsep=0.05em
+\begin{array}{rr@{\,}r|rr@{\,}r|rr@{\,}r|r@{\,}r|r@{\,}r|r}
+5 & 2 &&\, 2 \\
+\cline{4-5}
+5 & 2 &&\, 2 & 6 &&\, 2 \\
+\cline{1-2}\cline{7-8}
+&\textbf{0}&&2&6 &&\, 1 & 3 &&\, 2 \\
+\cline{4-5}\cline{10-10}
+&&&&   \textbf{0} &&  1 & 2 &&\, 6 &&\, 2 \\
+\cline{7-8}\cline{12-12}
+&&&&&&&           \textbf{1} &&  6 &&\, 3 &&\, 2 \\
+\cline{10-10}\cline{14-14}
+&&&&&&&&&                \textbf{0}&&\, 2 &&\, \textbf{1} \\
+\cline{12-12}
+&&&&&&&&&&&                     \textbf{1} \\
+\end{array}$} &
+\makecell{
+$\arraycolsep=0.05em
+\begin{array}{r@{\,}r|rr}
+\textbf{0} &&\, 16 \\
+\cline{1-3}
+\textbf{0} &&\, 32 \\
+\cline{1-3}
+\textbf{0} &&\, 64 \\
+ \cline{1-3}
+\textbf{1} &&\, 28 \\
+ \cline{1-3}
+\textbf{0} &&\, 56 \\
+ \cline{1-3}
+\textbf{1} &&\, 12 \\
+\end{array}$}
+\end{tabular}
+\end{center}
+
+Из чего получаем, что 52.16\(_{\text{10}}\) \(\approx\) \textbf{110100.00101\(_{\text{2}}\)}
+
+\section{Задание 5}
+\label{sec:org400f801}
+\subsection{Задание}
+\label{sec:orgf58f675}
+\begin{center}
+\begin{tabular}{|r|rrr|}
+\hline
+\# & A & B & C\\
+\hline
+27 & 38.64 & 16 & 2\\
+\hline
+\end{tabular}
+\end{center}
+
+\subsection{Решение}
+\label{sec:org55b9f0c}
+Найти: 38.64\(_{\text{16}}\) = ?\(_{\text{2}}\)
+\begin{center}
+\(\arraycolsep=0.05em
+\begin{array}{rrrrcrrrrrr}
+3  &&    8 && . &&    6 &&    4_{16} && = \\
+11 && 1000 && . && 0110 && 0100_2 \\
+\end{array}\)
+\end{center}
+
+Из чего получаем, что 38.64\(_{\text{16}}\) = \textbf{111000.011001\(_{\text{2}}\)} \(\approx\) \textbf{111000.011\(_{\text{2}}\)}
+
+\section{Задание 6}
+\label{sec:orge0b9e4b}
+\subsection{Задание}
+\label{sec:orgedbdf44}
+\begin{center}
+\begin{tabular}{|r|rrr|}
+\hline
+\# & A & B & C\\
+\hline
+27 & 73.14 & 8 & 2\\
+\hline
+\end{tabular}
+\end{center}
+
+\subsection{Решение}
+\label{sec:org6478504}
+Найти: 73.14\(_{\text{8}}\) = ?\(_{\text{2}}\)
+\begin{center}
+\(\arraycolsep=0.05em
+\begin{array}{rrrrcrrrrrr}
+  7 &&   3 && . &&   1 &&   4_8 && = \\
+111 && 011 && . && 001 && 100_2 \\
+\end{array}\)
+\end{center}
+
+Из чего получаем, что 73.14\(_{\text{8}}\) = \textbf{111011.0011\(_{\text{2}}\)}
+
+\section{Задание 7}
+\label{sec:org026e668}
+\subsection{Задание}
+\label{sec:orgf81c565}
+\begin{center}
+\begin{tabular}{|r|rrr|}
+\hline
+\# & A & B & C\\
+\hline
+27 & 0.001001 & 2 & 16\\
+\hline
+\end{tabular}
+\end{center}
+
+\subsection{Решение}
+\label{sec:org049573d}
+Найти: 0.001001\(_{\text{2}}\) = ?\(_{\text{16}}\)
+\begin{center}
+\(\arraycolsep=0.05em
+\begin{array}{rrcrrrrrr}
+0 && . && 0010 && 0100_2 && = \\
+0 && . &&    2 &&    4_{16} \\
+\end{array}\)
+\end{center}
+
+Из чего получаем, что 0.001001\(_{\text{2}}\) = \textbf{0.24\(_{\text{16}}\)}
+
+\section{Задание 8}
+\label{sec:orge0781b8}
+\subsection{Задание}
+\label{sec:org061e41e}
+\begin{center}
+\begin{tabular}{|r|rrr|}
+\hline
+\# & A & B & C\\
+\hline
+27 & 0.011001 & 2 & 10\\
+\hline
+\end{tabular}
+\end{center}
+
+\subsection{Решение}
+\label{sec:org9d5bbaa}
+Найти: 0.011001\(_{\text{2}}\) = ?\(_{\text{10}}\)
+\begin{center}
+\(\begin{array}{lcl}
+\overset{0}{0}.\overset{-1}{1}\overset{-2}{1}\overset{-3}{0}\overset{-4}{0}\overset{-5}{1}
+& = & 0 * 2^0 + 0 * 2^{-1} + 1 * 2^{-2} + 1 * 2^{-3} + 0 * 2^{-4} + 0 * 2^{-5} + 1 * 2^{-6} \\
+& = & 0.25 + 0.125 + 0.015625 = 0.390625_{10}
+\end{array}\)
+\end{center}
+
+Из чего получаем, что 0.011001\(_{\text{2}}\) = \textbf{0.390625\(_{\text{10}}\)} \(\approx\) \textbf{0.39063\(_{\text{10}}\)}
+
+\section{Задание 9}
+\label{sec:orgab9ac1e}
+\subsection{Задание}
+\label{sec:org1ea47e2}
+\begin{center}
+\begin{tabular}{|r|lrr|}
+\hline
+\# & A & B & C\\
+\hline
+27 & 1F.1E & 16 & 10\\
+\hline
+\end{tabular}
+\end{center}
+
+\subsection{Решение}
+\label{sec:org9653f28}
+Найти: 1F.1E\(_{\text{16}}\) = ?\(_{\text{10}}\)
+\begin{center}
+\(\begin{array}{lcl}
+\overset{1}{1}\overset{0}{F}.\overset{-1}{1}\overset{-2}{E}
+& = & 1 * 16^1 + F * 16^0 + 1 * 16^{-1} + E * 16^{-2} \\
+& = & 16 + 15 + 0.625 + 0.0546875 = 31.1171875_{10}
+\end{array}\)
+\end{center}
+
+Из чего получаем, что 1F.1E\(_{\text{16}}\) = \textbf{31.1171875\(_{\text{10}}\)} \(\approx\) \textbf{31.11719\(_{\text{10}}\)}
+
+\section{Задание 10}
+\label{sec:org14a22f5}
+\subsection{Задание}
+\label{sec:orgf1bbc08}
+\begin{center}
+\begin{tabular}{|r|rrl|}
+\hline
+\# & A & B & C\\
+\hline
+27 & 75 & 10 & Фиб\\
+\hline
+\end{tabular}
+\end{center}
+
+\subsection{Решение}
+\label{sec:org1bcc5f9}
+Найти: 75\(_{\text{10}}\) = ?\(_{\text{Фиб}}\) \\
+Фибоначчи: \(\{\overset{0}{1}, \overset{1}{2}, \overset{2}{3}, \overset{3}{5}, \overset{4}{8},
+\overset{5}{13}, \overset{6}{21}, \overset{7}{34}, \overset{8}{55}, \overset{9}{89}\}\) \\
+\begin{center}
+75\(_{\text{10}}\) = 55 + 13 + 5 + 2 = 100101010\(_{\text{Фиб}}\)
+\end{center}
+
+Из чего получаем, что 72\(_{\text{10}}\) = \textbf{100101010\(_{\text{Фиб}}\)}
+
+\section{Задание 11}
+\label{sec:org58ad7ed}
+\subsection{Задание}
+\label{sec:org4e4231a}
+\begin{center}
+\begin{tabular}{|r|llr|}
+\hline
+\# & A & B & C\\
+\hline
+27 & \(33\overline{2}00\) & 7C & 10\\
+\hline
+\end{tabular}
+\end{center}
+
+\subsection{Решение}
+\label{sec:org076ccdc}
+Найти: \(33\overline{2}00_{7C} = ?_{10}\) \\
+\begin{center}
+\(\begin{array}{lcl}
+\overset{4}{3}\overset{3}{3}\overset{\underline{2}}{2}\overset{1}{0}\overset{0}{0}_{7C}
+& = & 3 * 7^4 + 3 * 7^3 + (-2) * 7^2 + 0 * 7^1 + 0 * 7^0 \\
+& = & 7203 + 1029 - 686 + 0 + 0 = 7546_{10}
+\end{array}\)
+\end{center}
+
+Из чего получаем, что \(33\overline{2}00_{7C}\) = \textbf{7546\(_{\text{10}}\)}
+
+\section{Результаты}
+\label{sec:org3461907}
+\subsection{Таблица ответов}
+\label{sec:org25e4ab5}
+\begin{center}
+\begin{tabular}{|r|l|}
+\hline
+\# & Ответ\\
+\hline
+1 & 37638\(_{\text{9}}\)\\
+\hline
+2 & 2439\(_{\text{10}}\)\\
+\hline
+3 & 1344230\(_{\text{5}}\)\\
+\hline
+4 & 110100.00101\(_{\text{2}}\)\\
+\hline
+5 & 111000.011\(_{\text{2}}\)\\
+\hline
+6 & 111011.0011\(_{\text{2}}\)\\
+\hline
+7 & 0.24\(_{\text{16}}\)\\
+\hline
+8 & 0.39063\(_{\text{10}}\)\\
+\hline
+9 & 0.31.11719\(_{\text{10}}\)\\
+\hline
+10 & 100101010\(_{\text{Фиб}}\)\\
+\hline
+11 & 7546\(_{\text{10}}\)\\
+\hline
+\end{tabular}
+\end{center}
+
+\subsection{Вывод}
+\label{sec:org078655f}
+В ходе этой лабораторной работы я вспомнил как работать с различными системами
+счисления и алгоритмами для перевода чисел из одной СС в другую, а так же
+укрепил познакомился с СС на базе чисел Фибоначчи, факториальной СС и
+СС с отрицательными основаниями или числами.
+\end{document}
