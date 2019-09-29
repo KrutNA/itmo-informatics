@@ -1,0 +1,394 @@
+% Created 2019-09-29 Вс 12:46
+% Intended LaTeX compiler: pdflatex
+\documentclass[11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{graphicx}
+\usepackage{grffile}
+\usepackage{longtable}
+\usepackage{wrapfig}
+\usepackage{rotating}
+\usepackage[normalem]{ulem}
+\usepackage{amsmath}
+\usepackage{textcomp}
+\usepackage{amssymb}
+\usepackage{capt-of}
+\usepackage{hyperref}
+\usepackage[T2A]{fontenc}
+\usepackage[a4paper,left=3cm,top=2cm,right=1.5cm,bottom=2cm,marginparsep=7pt,marginparwidth=.6in]{geometry}
+\usepackage{cmap}
+\usepackage{xcolor}
+\usepackage{listings}
+\usepackage{polyglossia}
+\setdefaultlanguage{russian} \setotherlanguage{english}
+\setmainfont{Liberation Serif}
+\setsansfont{Liberation Sans}
+\setmonofont[Contextuals=Alternate,Ligatures={TeX}]{Fira Code Regular}
+\author{Крутько Никита}
+\date{\today}
+\title{}
+\hypersetup{
+ pdfauthor={Крутько Никита},
+ pdftitle={},
+ pdfkeywords={},
+ pdfsubject={},
+ pdfcreator={Emacs 26.1 (Org mode 9.1.9)}, 
+ pdflang={Russian}}
+\begin{document}
+
+\begin{center}
+\textbf{Санкт-Петербургский Национальный Исследовательский}\\
+\textbf{Университет Информационных Технологий, Механики и Оптики}\\
+\textbf{Факультет Программной Инженерии и Компьютерной Техники}\\
+\end{center}
+\vspace{1em}
+\begin{center}
+\includegraphics[width=120pt]{../itmo-logo.png}
+\end{center}
+\LARGE
+\vspace{5em}
+\begin{center}
+\textbf{Вариант №17}\\
+\textbf{Лабораторная работа №2}\\
+\Large
+\textbf{по дисциплине}\\
+\LARGE
+\textbf{\emph{'Информатика'}}\\
+\end{center}
+\vspace{11em}
+\large
+\begin{flushright}
+\textbf{Выполнил:}\\
+\textbf{Студент группы P3113}\\
+\textbf{\emph{Крутько Никита} : 242570}\\
+\textbf{Преподаватель:}\\
+\textbf{\emph{Малышева Татьяна Алексеевна}}\\
+\end{flushright}
+\vspace{4em}
+\large
+\begin{center}
+\textbf{Санкт-Петербург 2019 г.}
+\end{center}
+\pagebreak{}
+\setcounter{tocdepth}{2}
+\tableofcontents
+\vspace{2em}
+\lstset{language=Python,label=org7e377ac,caption={fromTenToN},captionpos=b,numbers=none}
+\begin{lstlisting}
+result = ""
+mod = True if value < 0 else False
+value = abs(value)
+while value >= dim:
+  result = str(value % dim) + result
+  value //= dim
+result = str(value) + result
+if mod:
+  result = "-" + result
+return result
+\end{lstlisting}
+\vspace{2em}
+\lstset{language=Python,label=org0f44137,caption={fromNToTen},captionpos=b,numbers=none}
+\begin{lstlisting}
+def convert():
+    result, tmp, is_break = "", "", False
+    def inverse(v):
+	return "0" if v == "1" else "1"
+    for v in str(value):
+	result += inverse(v)
+    while size_b*8 > len(result):
+	result = "1" + result
+    if not (str(value)[0:1] == "1" and
+	    len(str(value)) == size_b*8):
+	result = result[::-1]
+    for v in result[::-1]:
+	if v == "0" and not is_break:
+	    v = inverse(v)
+	    is_break = True
+	tmp += v if is_break else inverse(v)
+    return tmp[::-1]
+result, i = 0, 0
+mult = -1 if (str(value)[0:1] == "1" and
+	      len(str(value)) == size_b*8) else 1
+value = convert() if (str(value)[0:1] == "1" and
+		      len(str(value)) == size_b*8) else str(value)
+for v in value[::-1]:
+    result += int(v) * dim**i
+    i += 1
+print(result * mult)
+\end{lstlisting}
+\vspace{2em}
+\lstset{language=Python,label=org6f5cdae,caption={zeroFill},captionpos=b,numbers=none}
+\begin{lstlisting}
+result = str(value)
+while size_b*8 > len(result):
+    result = "0" + result
+print(result)
+\end{lstlisting}
+\vspace{2em}
+\lstset{language=Python,label=org61b4c7f,caption={convert},captionpos=b,numbers=none}
+\begin{lstlisting}
+result, tmp, is_break = "", "", False
+def inverse(v):
+    return "0" if v == "1" else "1"
+for v in str(value):
+    result += inverse(v)
+while size_b*8 > len(result):
+    result = "1" + result
+if not (str(value)[0:1] == "1" and
+	len(str(value)) == size_b*8):
+    result = result[::-1]
+for v in result:
+    if v == "0" and not is_break: v = inverse(v); is_break = True
+    tmp += v if is_break else inverse(v)
+print(tmp[::-1])
+\end{lstlisting}
+\vspace{2em}
+\lstset{language=Python,label=org0246540,caption={summ},captionpos=b,numbers=none}
+\begin{lstlisting}
+first, second = str(first)[::-1], str(second)[::-1]
+result = ""
+nxt, tmp, crnt = "0", "0", "0"
+if len(first) < len(second):
+    tmp = first; first = second; second = tmp
+for i in range(len(second)):
+    tmp = "0" if first[i:i+1] == second[i:i+1] else "1"
+    crnt = "0" if nxt == tmp else "1"
+    nxt = "1" if (tmp == "0" and tmp != first[i:i+1] or
+		  crnt == "0" and nxt != crnt) else "0"
+    result += crnt
+for i in range(len(second), len(first)):
+    crnt = "0" if nxt == first[i:i+1] else "1"
+    nxt = "1" if crnt != nxt else "0"
+    result += crnt
+#if len(second) == len(first):
+result += nxt
+print(result[0:16][::-1])
+\end{lstlisting}
+
+\section{Описание}
+\label{sec:org8cf798b}
+Дано: A = 12893; C = 13547
+\section{Задание 1}
+\label{sec:org40a7e9f}
+\subsection{Описание}
+\label{sec:org2d0d61e}
+По заданному варианту исходных данных получить набор десятичных чисел:
+\subsection{Решение}
+\label{sec:orgdb23f27}
+\setlength{\tabcolsep}{3pt}
+\begin{table}[htbp]
+\caption{\label{tab:orgdab43ca}
+Значения X}
+\centering
+\begin{tabular}{|llcr|lcrl|}
+\hline
+ & X1 & \(A\) & 12893 & X7 & \(-X7\) & -12893 & \\
+ & X2 & \(C\) & 13547 & X8 & \(-X8\) & -13547 & \\
+ & X3 & \(A+C\) & 26440 & X9 & \(-X9\) & -26440 & \\
+ & X4 & \(A+2C\) & 39987 & X10 & \(-X10\) & -39987 & \\
+ & X5 & \(C-A\) & 654 & X11 & \(-X11\) & -654 & \\
+ & X6 & \(65536-X4\) & 25549 & X12 & \(-X12\) & -25549 & \\
+\hline
+\end{tabular}
+\end{table}
+
+\section{Задание 2}
+\label{sec:orge9b73aa}
+\subsection{Описание}
+\label{sec:orgca4a749}
+Выполнить перевод десятичных чисел X1,…,X6 в двоичную систему счисления, получив их двоичные эквиваленты B1,…,B6 соответственно.
+Не использовать при этом никакой формат представления данных, не использовать никакую разрядную сетку.
+
+\subsection{Решение}
+\label{sec:org24bbd1e}
+\setlength{\tabcolsep}{3pt}
+\label{tab:org3faa3c4}
+\begin{tabular}{llllclcl}
+ &  &  & X1\(_{\text{10}}\) & \(\to\) & B1\(_{\text{2}}\) & = & 11001001011101\\
+ &  &  & X2\(_{\text{10}}\) & \(\to\) & B2\(_{\text{2}}\) & = & 11010011101011\\
+ &  &  & X3\(_{\text{10}}\) & \(\to\) & B3\(_{\text{2}}\) & = & 110011101001000\\
+ &  &  & X4\(_{\text{10}}\) & \(\to\) & B4\(_{\text{2}}\) & = & 1001110000110011\\
+ &  &  & X5\(_{\text{10}}\) & \(\to\) & B5\(_{\text{2}}\) & = & 1010001110\\
+ &  &  & X6\(_{\text{10}}\) & \(\to\) & B6\(_{\text{2}}\) & = & 110001111001101\\
+\end{tabular}
+
+\section{Задание 3}
+\label{sec:org8fa4be1}
+\subsection{Описание}
+\label{sec:orgb0c147e}
+Используя 16-разрядный двоичный формат со знаком и полученные в предыдущем пункте задания двоичные числа B1,…,B6 (т.е. при необходимости дополнить числа B1…B6 ведущими нулями и однозначно интерпретировать эти числа в 16-разрядном двоичном формате со знаком), вычислить двоичные числа B7,…,B12: B7 = -B1, B8 = -B2, B9 = -B3, B10 = -B4, B11 = -B5, B12 = -B6. Отрицательные числа представлять в дополнительном коде
+
+\subsection{Решение}
+\label{sec:org562d63a}
+\setlength{\tabcolsep}{3pt}
+\label{tab:orgbcfcfed}
+\begin{tabular}{llllcrcl}
+ &  &  & B1\(_{\text{10}}\) & \(\to\) & B1\(_{\text{2}}\) & = & 0011001001011101\\
+ &  &  & B2\(_{\text{10}}\) & \(\to\) & B2\(_{\text{2}}\) & = & 0011010011101011\\
+ &  &  & B3\(_{\text{10}}\) & \(\to\) & B3\(_{\text{2}}\) & = & 0110011101001000\\
+ &  &  & B4\(_{\text{10}}\) & \(\to\) & B4\(_{\text{2}}\) & = & 1001110000110011\\
+ &  &  & B5\(_{\text{10}}\) & \(\to\) & B5\(_{\text{2}}\) & = & 0000001010001110\\
+ &  &  & B6\(_{\text{10}}\) & \(\to\) & B6\(_{\text{2}}\) & = & 0110001111001101\\
+\end{tabular}
+\setlength{\tabcolsep}{3pt}
+\label{tab:orgb6b5aa2}
+\begin{tabular}{llllcrcl}
+ &  &  & B7\(_{\text{2}}\) & \(\to\) & -B1\(_{\text{2}}\) & = & 1100110110100011\\
+ &  &  & B8\(_{\text{2}}\) & \(\to\) & -B2\(_{\text{2}}\) & = & 1100101100010101\\
+ &  &  & B9\(_{\text{2}}\) & \(\to\) & -B3\(_{\text{2}}\) & = & 1001100010111000\\
+ &  &  & B10\(_{\text{2}}\) & \(\to\) & -B4\(_{\text{2}}\) & = & 0011001111000111\\
+ &  &  & B11\(_{\text{2}}\) & \(\to\) & -B5\(_{\text{2}}\) & = & 1111110101110010\\
+ &  &  & B12\(_{\text{2}}\) & \(\to\) & -B6\(_{\text{2}}\) & = & 1001110000110011\\
+\end{tabular}
+
+\section{Задание 4}
+\label{sec:org13146ce}
+\subsection{Описание}
+\label{sec:orgabe5e8f}
+Найти область допустимых значений для данного двоичного формата.
+
+\subsection{Решение}
+\label{sec:orgc4f133d}
+
+ОДЗ: -32768..32767
+
+\section{Задание 5}
+\label{sec:org0e983b6}
+\subsection{Описание}
+\label{sec:orgc706981}
+Выполнить обратный перевод двоичных чисел B1…B12 (используя 16-разрядный двоичный формат со знаком) в десятичные и прокомментировать полученные результаты.
+
+\subsection{Решение}
+\label{sec:org96feafe}
+\setlength{\tabcolsep}{3pt}
+\label{tab:org5419dcd}
+\begin{tabular}{llllclcll}
+ &  &  & B1\(_{\text{10}}\) & \(\to\) & Н1\(_{\text{10}}\) & = & 12893 & Compares\\
+ &  &  & B2\(_{\text{10}}\) & \(\to\) & Н2\(_{\text{10}}\) & = & 13547 & Compares\\
+ &  &  & B3\(_{\text{10}}\) & \(\to\) & Н3\(_{\text{10}}\) & = & 26440 & Compares\\
+ &  &  & B4\(_{\text{10}}\) & \(\to\) & Н4\(_{\text{10}}\) & = & -25549 & Not compares\\
+ &  &  & B5\(_{\text{10}}\) & \(\to\) & Н5\(_{\text{10}}\) & = & 654 & Compares\\
+ &  &  & B6\(_{\text{10}}\) & \(\to\) & Н6\(_{\text{10}}\) & = & 25549 & Compares\\
+\end{tabular}
+\setlength{\tabcolsep}{3pt}
+\label{tab:org10c5256}
+\begin{tabular}{llllclcll}
+ &  &  & B7\(_{\text{10}}\) & \(\to\) & Н7\(_{\text{10}}\) & = & -12893 & Compares\\
+ &  &  & B8\(_{\text{10}}\) & \(\to\) & Н8\(_{\text{10}}\) & = & -13547 & Compares\\
+ &  &  & B9\(_{\text{10}}\) & \(\to\) & Н9\(_{\text{10}}\) & = & -26440 & Compares\\
+ &  &  & B10\(_{\text{10}}\) & \(\to\) & Н10\(_{\text{10}}\) & = & 13255 & Not compares\\
+ &  &  & B11\(_{\text{10}}\) & \(\to\) & Н11\(_{\text{10}}\) & = & -654 & Compares\\
+ &  &  & B12\(_{\text{10}}\) & \(\to\) & Н12\(_{\text{10}}\) & = & -25549 & Compares\\
+\end{tabular}
+
+\section{Задание 6}
+\label{sec:org045fd63}
+\subsection{Описание}
+\label{sec:org8acbd67}
+Выполнить следующие сложения двоичных чисел: B1+B2, B2+B3, B2+B7, B7+B8, B8+B9, B1+B8, B11+B3 (итого, 7 операций сложения).\\
+Для представления слагаемых и результатов сложения использовать 16-разрядный двоичный формат со знаком. Результаты сложения перевести в десятичную систему счисления, сравнить с соответствующими десятичными числами (т.е. сравнить с суммой слагаемых, представленных в десятичной системе: B1 + B2 vs X1 + X2).
+
+\subsection{Решение}
+\label{sec:orgcce9d84}
+\subsubsection{B1 + B2}
+\label{sec:org9d331c0}
+\setlength{\tabcolsep}{3pt}
+\label{tab:org57b63a8}
+\begin{tabular}{lllllrlllllr}
+ &  &  &  & B1\(_{\text{2}}\) & 11001001011101 &  &  &  &  & X1 & 12893\\
+ &  &  & + & B2\(_{\text{2}}\) & 11010011101011 &  &  &  & + & X2 & 13547\\
+ &  &  &  &  & ------------------------ &  &  & = &  &  & ---------\\
+ &  &  &  &  & 110011101001000 & = & 26440 &  &  &  & 26440\\
+\end{tabular}
+
+CF = 0; PF = 1; AF = 1; ZF = 0; SF = 0; OF = 0\\
+При сложении двух положительных слагаемых получено положительное число. Результат выполнения операции верный и корректный, совпадает с суммой десятичных эквивалентов.
+
+\subsubsection{B2 + B3}
+\label{sec:orgee7b5f3}
+\setlength{\tabcolsep}{3pt}
+\label{tab:org7a1384f}
+\begin{tabular}{lllllrlllllr}
+ &  &  &  & B2\(_{\text{2}}\) & 11010011101011 &  &  &  &  & X2 & 13547\\
+ &  &  & + & B3\(_{\text{2}}\) & 110011101001000 &  &  &  & + & X3 & 26440\\
+ &  &  &  &  & ------------------------ &  &  & = &  &  & ---------\\
+ &  &  &  &  & 1001110000110011 & = & -25549 &  &  &  & 39987\\
+\end{tabular}
+
+CF = 0; PF = 1; AF = 1; ZF = 0; SF = 1; OF = 1\\
+При сложении двух положительных слагаемых получено отрицательное число. Результат выполнения операции неверный и некорректный, не совпадает с суммой десятичных эквивалентов.
+
+\subsubsection{B2 + B7}
+\label{sec:org6b160de}
+\setlength{\tabcolsep}{3pt}
+\label{tab:orgfd75604}
+\begin{tabular}{lllllrlllllr}
+ &  &  &  & B2\(_{\text{2}}\) & 11010011101011 &  &  &  &  & X2 & 13547\\
+ &  &  & + & B7\(_{\text{2}}\) & 1100110110100011 &  &  &  & + & X7 & -12893\\
+ &  &  &  &  & ------------------------ &  &  & = &  &  & ---------\\
+ &  &  &  &  & 0000001010001110 & = & 654 &  &  &  & 654\\
+\end{tabular}
+
+CF = 0; PF = 1; AF = 0; ZF = 0; SF = 0; OF = 0\\
+При сложении двух положительных слагаемых получено положительное число. Результат выполнения операции верный и корректный, совпадает с суммой десятичных эквивалентов.
+
+\subsubsection{B7 + B8}
+\label{sec:orgf5beef2}
+\setlength{\tabcolsep}{3pt}
+\label{tab:org4065ec1}
+\begin{tabular}{lllllrlllllr}
+ &  &  &  & B7\(_{\text{2}}\) & 1100110110100011 &  &  &  &  & X7 & -12893\\
+ &  &  & + & B8\(_{\text{2}}\) & 1100101100010101 &  &  &  & + & X8 & -13547\\
+ &  &  &  &  & ------------------------ &  &  & = &  &  & ---------\\
+ &  &  &  &  & 1001100010111000 & = & -26440 &  &  &  & -26440\\
+\end{tabular}
+
+CF = 0; PF = 1; AF = 0; ZF = 0; SF = 1; OF = 0\\
+При сложении двух отрицательных слагаемых получено отрицательное число. Результат выполнения операции верный и корректный, совпадает с суммой десятичных эквивалентов.
+
+\subsubsection{B8 + B9}
+\label{sec:orgd545b27}
+\setlength{\tabcolsep}{3pt}
+\label{tab:org57f8c4a}
+\begin{tabular}{lllllrlllllr}
+ &  &  &  & B8\(_{\text{2}}\) & 1100101100010101 &  &  &  &  & X8 & -13547\\
+ &  &  & + & B9\(_{\text{2}}\) & 1001100010111000 &  &  &  & + & X9 & -26440\\
+ &  &  &  &  & ------------------------ &  &  & = &  &  & ---------\\
+ &  &  &  &  & 0110001111001101 & = & 25549 &  &  &  & -39987\\
+\end{tabular}
+
+CF = 1; PF = 0; AF = 0; ZF = 0; SF = 0; OF = 1\\
+При сложении двух отрицательных слагаемых получено положительное число. Результат выполнения операции неверный и некорректный, не совпадает с суммой десятичных эквивалентов.
+
+\subsubsection{B1 + B8}
+\label{sec:org308dbef}
+\setlength{\tabcolsep}{3pt}
+\label{tab:org251e359}
+\begin{tabular}{lllllrlllllr}
+ &  &  &  & B1\(_{\text{2}}\) & 11001001011101 &  &  &  &  & X1 & 12893\\
+ &  &  & + & B9\(_{\text{2}}\) & 1001100010111000 &  &  &  & + & X9 & -26440\\
+ &  &  &  &  & ------------------------ &  &  & = &  &  & ---------\\
+ &  &  &  &  & 1100101100010101 & = & -13547 &  &  &  & -13547\\
+\end{tabular}
+
+CF =0; PF = 0; AF = 1; ZF = 0; SF = 1; OF = 0\\
+При сложении отрицательного и положительного слагаемых получено отрицательное число. Результат выполнения операции верный и корректный, совпадает с суммой десятичных эквивалентов.
+
+\subsubsection{B11 + B3}
+\label{sec:org1ade089}
+\setlength{\tabcolsep}{3pt}
+\label{tab:org3c9470d}
+\begin{tabular}{lllllrlllllr}
+ &  &  &  & B11\(_{\text{2}}\) & 1111110101110010 &  &  &  &  & X11 & -654\\
+ &  &  & + & B3\(_{\text{2}}\) & 110011101001000 &  &  &  & + & X3 & 26440\\
+ &  &  &  &  & ------------------------ &  &  & = &  &  & ---------\\
+ &  &  &  &  & 0110010010111010 & = & 25786 &  &  &  & 25786\\
+\end{tabular}
+
+CF = 1; PF = 0; AF = 0; ZF = 0; SF = 0; OF = 0\\
+При сложении отрицательного и положительного слагаемых получено отрицательное число. Результат выполнения операции верный и корректный, совпадает с суммой десятичных эквивалентов.
+
+\section{Вывод}
+\label{sec:orgb12dfe2}
+В ходе выполнения лабораторной работы я изучил как выполнять операции с двоичными числами на доп коде, написал прогрыммы на языке \emph{Python}, которые это делают, а также изучил флаги состояния процессора.
+\end{document}

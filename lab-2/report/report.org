@@ -1,0 +1,346 @@
+#+SETUPFILE: /home/krutna/.emacs.d/org-mode/itmo/main/setup.org
+#+SETUPFILE: /home/krutna/.emacs.d/org-mode/orgs/setup/setup.org
+#+BEGIN_CENTER
+*Санкт-Петербургский Национальный Исследовательский*\\
+*Университет Информационных Технологий, Механики и Оптики*\\
+*Факультет Программной Инженерии и Компьютерной Техники*\\
+#+END_CENTER
+#+LATEX: \vspace{1em}
+#+ATTR_LATEX: :width 120pt
+#+ATTR_ORG: :width 120pt
+file:../itmo-logo.png
+#+LATEX: \LARGE
+#+LATEX: \vspace{5em}
+#+BEGIN_CENTER
+*Вариант №17*\\
+*Лабораторная работа №2*\\
+#+LATEX: \Large
+*по дисциплине*\\
+#+LATEX: \LARGE
+*/'Информатика'/*\\
+#+END_CENTER
+#+LATEX: \vspace{11em}
+#+LATEX: \large
+#+LATEX: \begin{flushright}
+*Выполнил:*\\
+*Студент группы P3113*\\
+*/Крутько Никита/ : 242570*\\
+*Преподаватель:*\\
+*/Малышева Татьяна Алексеевна/*\\
+#+LATEX: \end{flushright}
+#+LATEX: \vspace{4em}
+#+LATEX: \large
+#+BEGIN_CENTER
+*Санкт-Петербург 2019 г.*
+#+END_CENTER
+#+LATEX: \pagebreak{}
+#+TOC: headlines 2
+#+LATEX: \vspace{2em}
+#+PROPERTY: header-args:python :var A=12893 :var C=13547
+#+CONSTANTS: A=12893 C=13547 BYTES=2
+#+NAME: fromTenToN
+#+CAPTION: fromTenToN
+#+BEGIN_SRC python: :exports none :var value=0 :var dim=2
+  result = ""
+  mod = True if value < 0 else False
+  value = abs(value)
+  while value >= dim:
+    result = str(value % dim) + result
+    value //= dim
+  result = str(value) + result
+  if mod:
+    result = "-" + result
+  return result
+#+END_SRC
+#+LATEX: \vspace{2em}
+#+NAME: fromNToTen 
+#+CAPTION: fromNToTen
+#+BEGIN_SRC python: :exports none :noweb yes :var value=0 :var dim=2 :var size_b=2 :results output
+  def convert():
+      result, tmp, is_break = "", "", False
+      def inverse(v):
+	  return "0" if v == "1" else "1"
+      for v in str(value):
+	  result += inverse(v)
+      while size_b*8 > len(result):
+	  result = "1" + result
+      if not (str(value)[0:1] == "1" and
+	      len(str(value)) == size_b*8):
+	  result = result[::-1]
+      for v in result[::-1]:
+	  if v == "0" and not is_break:
+	      v = inverse(v)
+	      is_break = True
+	  tmp += v if is_break else inverse(v)
+      return tmp[::-1]
+  result, i = 0, 0
+  mult = -1 if (str(value)[0:1] == "1" and
+		len(str(value)) == size_b*8) else 1
+  value = convert() if (str(value)[0:1] == "1" and
+			len(str(value)) == size_b*8) else str(value)
+  for v in value[::-1]:
+      result += int(v) * dim**i
+      i += 1
+  print(result * mult)
+#+END_SRC
+#+LATEX: \vspace{2em}
+#+NAME: zeroFill
+#+ATTR_LATEX: :float nil
+#+CAPTION: zeroFill
+#+BEGIN_SRC python: :exports none :var value=0 :var size_b=2  :results output
+  result = str(value)
+  while size_b*8 > len(result):
+      result = "0" + result
+  print(result)
+#+END_SRC
+#+LATEX: \vspace{2em}
+#+NAME: convert
+#+CAPTION: convert
+#+BEGIN_SRC python: :exports none :var value=0 :var size_b=2 :results output
+  result, tmp, is_break = "", "", False
+  def inverse(v):
+      return "0" if v == "1" else "1"
+  for v in str(value):
+      result += inverse(v)
+  while size_b*8 > len(result):
+      result = "1" + result
+  if not (str(value)[0:1] == "1" and
+	  len(str(value)) == size_b*8):
+      result = result[::-1]
+  for v in result:
+      if v == "0" and not is_break: v = inverse(v); is_break = True
+      tmp += v if is_break else inverse(v)
+  print(tmp[::-1])
+#+END_SRC
+#+LATEX: \vspace{2em}
+#+NAME: summ
+#+CAPTION: summ
+#+BEGIN_SRC python: :exports none :var first=0 :var second=0 :var size_b=2 :results output
+  first, second = str(first)[::-1], str(second)[::-1]
+  result = ""
+  nxt, tmp, crnt = "0", "0", "0"
+  if len(first) < len(second):
+      tmp = first; first = second; second = tmp
+  for i in range(len(second)):
+      tmp = "0" if first[i:i+1] == second[i:i+1] else "1"
+      crnt = "0" if nxt == tmp else "1"
+      nxt = "1" if (tmp == "0" and tmp != first[i:i+1] or
+		    crnt == "0" and nxt != crnt) else "0"
+      result += crnt
+  for i in range(len(second), len(first)):
+      crnt = "0" if nxt == first[i:i+1] else "1"
+      nxt = "1" if crnt != nxt else "0"
+      result += crnt
+  #if len(second) == len(first):
+  result += nxt
+  print(result[0:16][::-1])
+#+END_SRC
+
+* Описание
+Дано: A = src_python{return A}; C = src_python{return C}
+* Задание 1
+** Описание
+По заданному варианту исходных данных получить набор десятичных чисел:
+** Решение
+#+LATEX: \setlength{\tabcolsep}{3pt}
+#+NAME: tbl_x_data
+#+CAPTION: Значения X
+| / | < |    | <c>        |     > | <   | <c>    |        | > |
+|---+---+----+------------+-------+-----+--------+--------+---|
+| # |   | X1 | $A$        | 12893 | X7  | $-X7$  | -12893 |   |
+| # |   | X2 | $C$        | 13547 | X8  | $-X8$  | -13547 |   |
+| # |   | X3 | $A+C$      | 26440 | X9  | $-X9$  | -26440 |   |
+| # |   | X4 | $A+2C$     | 39987 | X10 | $-X10$ | -39987 |   |
+| # |   | X5 | $C-A$      |   654 | X11 | $-X11$ |   -654 |   |
+| # |   | X6 | $65536-X4$ | 25549 | X12 | $-X12$ | -25549 |   |
+|---+---+----+------------+-------+-----+--------+--------+---|
+#+TBLFM: $8=-$-3::@2$5=$A::@3$5=$C::@4$5=@-2 + @-1::@5$5=@-3 + @-2 * 2::@6$5=@-3 - @-4::@7$5=65536 - @-2
+
+* Задание 2
+** Описание
+Выполнить перевод десятичных чисел X1,…,X6 в двоичную систему счисления, получив их двоичные эквиваленты B1,…,B6 соответственно.
+Не использовать при этом никакой формат представления данных, не использовать никакую разрядную сетку.
+
+** Решение
+#+LATEX: \setlength{\tabcolsep}{3pt}
+#+NAME: tbl_bin_data
+#+ATTR_LATEX: :center nil
+| / |   |   |   | <l>   | <c> | <l>  | <c> | <l>              |
+| # |   |   |   | X1_10 | \to | B1_2 | =   | 11001001011101   |
+| # |   |   |   | X2_10 | \to | B2_2 | =   | 11010011101011   |
+| # |   |   |   | X3_10 | \to | B3_2 | =   | 110011101001000  |
+| # |   |   |   | X4_10 | \to | B4_2 | =   | 1001110000110011 |
+| # |   |   |   | X5_10 | \to | B5_2 | =   | 1010001110       |
+| # |   |   |   | X6_10 | \to | B6_2 | =   | 110001111001101  |
+#+TBLFM: $9='(org-sbe "fromTenToN" (value remote(tbl_x_data, @@#$5)) (dim 2))
+
+* Задание 3
+** Описание
+Используя 16-разрядный двоичный формат со знаком и полученные в предыдущем пункте задания двоичные числа B1,…,B6 (т.е. при необходимости дополнить числа B1…B6 ведущими нулями и однозначно интерпретировать эти числа в 16-разрядном двоичном формате со знаком), вычислить двоичные числа B7,…,B12: B7 = -B1, B8 = -B2, B9 = -B3, B10 = -B4, B11 = -B5, B12 = -B6. Отрицательные числа представлять в дополнительном коде
+
+** Решение
+#+LATEX: \setlength{\tabcolsep}{3pt}
+#+NAME: tbl_bin_data_all
+#+ATTR_LATEX: :center nil
+| / |   |   |   | <l>   | <c> | <r5>  | <c> | <l>              |
+| # |   |   |   | B1_10 | \to | B1_2  | =   | 0011001001011101 |
+| # |   |   |   | B2_10 | \to | B2_2  | =   | 0011010011101011 |
+| # |   |   |   | B3_10 | \to | B3_2  | =   | 0110011101001000 |
+| # |   |   |   | B4_10 | \to | B4_2  | =   | 1001110000110011 |
+| # |   |   |   | B5_10 | \to | B5_2  | =   | 0000001010001110 |
+| # |   |   |   | B6_10 | \to | B6_2  | =   | 0110001111001101 |
+#+TBLFM: @2$9..@7$9='(org-sbe zeroFill (value remote(tbl_bin_data, @@#$$#)) (size_b $BYTES))
+#+LATEX: \setlength{\tabcolsep}{3pt}
+#+NAME: tbl_bin_data_all_inv
+#+ATTR_LATEX: :center nil
+| / |   |   |   | <l>    | <c> |  <r5> | <c> | <l>              |
+| # |   |   |   | B7_2   | \to | -B1_2 | =   | 1100110110100011 |
+| # |   |   |   | B8_2   | \to | -B2_2 | =   | 1100101100010101 |
+| # |   |   |   | B9_2   | \to | -B3_2 | =   | 1001100010111000 |
+| # |   |   |   | B10_2  | \to | -B4_2 | =   | 0011001111000111 |
+| # |   |   |   | B11_2  | \to | -B5_2 | =   | 1111110101110010 |
+| # |   |   |   | B12_2  | \to | -B6_2 | =   | 1001110000110011 |
+#+TBLFM: @2$9..@7$9='(org-sbe convert (value remote(tbl_bin_data_all, @@#$$#)) (size_b $BYTES))
+
+* Задание 4
+** Описание
+Найти область допустимых значений для данного двоичного формата.
+
+** Решение
+
+ОДЗ: src_python[:var val=tbl_bin_data_all[-3,-1] :var dim=2]{return "-{}..{}".format(2**(len(str(int(val))) - 1), 2**(len(str(int(val))) - 1) - 1)} {{{results(=-32768..32767=)}}}
+
+* Задание 5
+** Описание
+Выполнить обратный перевод двоичных чисел B1…B12 (используя 16-разрядный двоичный формат со знаком) в десятичные и прокомментировать полученные результаты.
+
+** Решение
+#+LATEX: \setlength{\tabcolsep}{3pt}
+#+NAME: tbl_h_data
+#+ATTR_LATEX: :center nil
+| / |   |   |   | <l6>   | <c> | <l6>   | <c> | <l>    |              |
+| # |   |   |   | B1_10  | \to | Н1_10  | =   | 12893  | Compares     |
+| # |   |   |   | B2_10  | \to | Н2_10  | =   | 13547  | Compares     |
+| # |   |   |   | B3_10  | \to | Н3_10  | =   | 26440  | Compares     |
+| # |   |   |   | B4_10  | \to | Н4_10  | =   | -25549 | Not compares |
+| # |   |   |   | B5_10  | \to | Н5_10  | =   | 654    | Compares     |
+| # |   |   |   | B6_10  | \to | Н6_10  | =   | 25549  | Compares     |
+#+TBLFM: @2$9..@7$9='(org-sbe fromNToTen (value remote(tbl_bin_data_all, @@#$$#)) (size_b $BYTES))::@2$10..@7$10=if ( @@#$-1 == remote(tbl_x_data, @@#$5), string("Compares"), string("Not compares"))
+#+LATEX: \setlength{\tabcolsep}{3pt}
+#+NAME: tbl_h_data_inv
+#+ATTR_LATEX: :center nil
+| / |   |   |   | <l6>   | <c> | <l6>   | <c> | <l>    |              |
+| # |   |   |   | B7_10  | \to | Н7_10  | =   | -12893 | Compares     |
+| # |   |   |   | B8_10  | \to | Н8_10  | =   | -13547 | Compares     |
+| # |   |   |   | B9_10  | \to | Н9_10  | =   | -26440 | Compares     |
+| # |   |   |   | B10_10 | \to | Н10_10 | =   | 13255  | Not compares |
+| # |   |   |   | B11_10 | \to | Н11_10 | =   | -654   | Compares     |
+| # |   |   |   | B12_10 | \to | Н12_10 | =   | -25549 | Compares     |
+#+TBLFM: @2$9..@7$9='(org-sbe fromNToTen (value remote(tbl_bin_data_all_inv, @@#$$#)) (size_b $BYTES))::@2$10..@7$10=if ( @@#$-1 == remote(tbl_x_data, @@#$8), string("Compares"), string("Not compares"))
+
+* Задание 6
+** Описание
+Выполнить следующие сложения двоичных чисел: B1+B2, B2+B3, B2+B7, B7+B8, B8+B9, B1+B8, B11+B3 (итого, 7 операций сложения).\\
+Для представления слагаемых и результатов сложения использовать 16-разрядный двоичный формат со знаком. Результаты сложения перевести в десятичную систему счисления, сравнить с соответствующими десятичными числами (т.е. сравнить с суммой слагаемых, представленных в десятичной системе: B1 + B2 vs X1 + X2).
+
+** Решение
+*** B1 + B2
+#+LATEX: \setlength{\tabcolsep}{3pt}
+#+NAME: tbl_h_data_inv
+#+ATTR_LATEX: :center nil
+| / |   |   |   |   |      |                          |   |       |   |   |    |           |
+| # |   |   |   |   | B1_2 |           11001001011101 |   |       |   |   | X1 |     12893 |
+| # |   |   |   | + | B2_2 |           11010011101011 |   |       |   | + | X2 |     13547 |
+| # |   |   |   |   |      | ------------------------ |   |       | = |   |    | --------- |
+| # |   |   |   |   |      |          110011101001000 | = | 26440 |   |   |    |     26440 |
+#+TBLFM: @2$6=remote(tbl_bin_data_all, @2$7)::@2$7=remote(tbl_bin_data_all, @2$9)::@2$12=remote(tbl_x_data, @2$3)::@2$13=remote(tbl_x_data, @2$5)::@3$6=remote(tbl_bin_data_all, @3$7)::@3$7=remote(tbl_bin_data_all, @3$9)::@3$12=remote(tbl_x_data, @3$3)::@3$13=remote(tbl_x_data, @3$5)::@4$7=string("------------------------")::@4$13=string("---------")::@5$7='(org-sbe summ (first @2$7) (second @3$7) (size_b $BYTES))::@5$9='(org-sbe fromNToTen (value @5$7) (size_b $BYTES))::@5$13=@2$13 + @3$13
+
+CF = 0; PF = 1; AF = 1; ZF = 0; SF = 0; OF = 0\\
+При сложении двух положительных слагаемых получено положительное число. Результат выполнения операции верный и корректный, совпадает с суммой десятичных эквивалентов.
+
+*** B2 + B3
+#+LATEX: \setlength{\tabcolsep}{3pt}
+#+NAME: tbl_h_data_inv
+#+ATTR_LATEX: :center nil
+| / |   |   |   |   |      |                          |   |        |   |   |    |           |
+| # |   |   |   |   | B2_2 |           11010011101011 |   |        |   |   | X2 |     13547 |
+| # |   |   |   | + | B3_2 |          110011101001000 |   |        |   | + | X3 |     26440 |
+| # |   |   |   |   |      | ------------------------ |   |        | = |   |    | --------- |
+| # |   |   |   |   |      |         1001110000110011 | = | -25549 |   |   |    |     39987 |
+#+TBLFM: @2$6=remote(tbl_bin_data_all, @3$7)::@2$7=remote(tbl_bin_data_all, @3$9)::@2$12=remote(tbl_x_data, @3$3)::@2$13=remote(tbl_x_data, @3$5)::@3$6=remote(tbl_bin_data_all, @4$7)::@3$7=remote(tbl_bin_data_all, @4$9)::@3$12=remote(tbl_x_data, @4$3)::@3$13=remote(tbl_x_data, @4$5)::@4$7=string("------------------------")::@4$13=string("---------")::@5$7='(org-sbe summ (first @2$7) (second @3$7) (size_b $BYTES))::@5$9='(org-sbe fromNToTen (value @5$7) (size_b $BYTES))::@5$13=@2$13 + @3$13
+
+CF = 0; PF = 1; AF = 1; ZF = 0; SF = 1; OF = 1\\
+При сложении двух положительных слагаемых получено отрицательное число. Результат выполнения операции неверный и некорректный, не совпадает с суммой десятичных эквивалентов.
+
+*** B2 + B7
+#+LATEX: \setlength{\tabcolsep}{3pt}
+#+NAME: tbl_h_data_inv
+#+ATTR_LATEX: :center nil
+| / |   |   |   |   |      |                          |   |     |   |   |    |           |
+| # |   |   |   |   | B2_2 |           11010011101011 |   |     |   |   | X2 |     13547 |
+| # |   |   |   | + | B7_2 |         1100110110100011 |   |     |   | + | X7 |    -12893 |
+| # |   |   |   |   |      | ------------------------ |   |     | = |   |    | --------- |
+| # |   |   |   |   |      |         0000001010001110 | = | 654 |   |   |    |       654 |
+#+TBLFM: @2$6=remote(tbl_bin_data_all, @3$7)::@2$7=remote(tbl_bin_data_all, @3$9)::@2$12=remote(tbl_x_data, @3$3)::@2$13=remote(tbl_x_data, @3$5)::@3$6=remote(tbl_bin_data_all_inv, @2$5)::@3$7=remote(tbl_bin_data_all_inv, @2$9)::@3$12=remote(tbl_x_data, @2$6)::@3$13=remote(tbl_x_data, @2$8)::@4$7=string("------------------------")::@4$13=string("---------")::@5$7='(org-sbe summ (first @2$7) (second @3$7) (size_b $BYTES))::@5$9='(org-sbe fromNToTen (value @5$7) (size_b $BYTES))::@5$13=@2$13 + @3$13
+
+CF = 0; PF = 1; AF = 0; ZF = 0; SF = 0; OF = 0\\
+При сложении двух положительных слагаемых получено положительное число. Результат выполнения операции верный и корректный, совпадает с суммой десятичных эквивалентов.
+
+*** B7 + B8
+#+LATEX: \setlength{\tabcolsep}{3pt}
+#+NAME: tbl_h_data_inv
+#+ATTR_LATEX: :center nil
+| / |   |   |   |   |      |                          |   |        |   |   |    |           |
+| # |   |   |   |   | B7_2 |         1100110110100011 |   |        |   |   | X7 |    -12893 |
+| # |   |   |   | + | B8_2 |         1100101100010101 |   |        |   | + | X8 |    -13547 |
+| # |   |   |   |   |      | ------------------------ |   |        | = |   |    | --------- |
+| # |   |   |   |   |      |         1001100010111000 | = | -26440 |   |   |    |    -26440 |
+#+TBLFM: @2$6=remote(tbl_bin_data_all_inv, @2$5)::@2$7=remote(tbl_bin_data_all_inv, @2$9)::@2$12=remote(tbl_x_data, @2$6)::@2$13=remote(tbl_x_data, @2$8)::@3$6=remote(tbl_bin_data_all_inv, @3$5)::@3$7=remote(tbl_bin_data_all_inv, @3$9)::@3$12=remote(tbl_x_data, @3$6)::@3$13=remote(tbl_x_data, @3$8)::@4$7=string("------------------------")::@4$13=string("---------")::@5$7='(org-sbe summ (first @2$7) (second @3$7) (size_b $BYTES))::@5$9='(org-sbe fromNToTen (value @5$7) (size_b $BYTES))::@5$13=@2$13 + @3$13
+
+CF = 0; PF = 1; AF = 0; ZF = 0; SF = 1; OF = 0\\
+При сложении двух отрицательных слагаемых получено отрицательное число. Результат выполнения операции верный и корректный, совпадает с суммой десятичных эквивалентов.
+
+*** B8 + B9
+#+LATEX: \setlength{\tabcolsep}{3pt}
+#+NAME: tbl_h_data_inv
+#+ATTR_LATEX: :center nil
+| / |   |   |   |   |      |                          |   |       |   |   |    |           |
+| # |   |   |   |   | B8_2 |         1100101100010101 |   |       |   |   | X8 |    -13547 |
+| # |   |   |   | + | B9_2 |         1001100010111000 |   |       |   | + | X9 |    -26440 |
+| # |   |   |   |   |      | ------------------------ |   |       | = |   |    | --------- |
+| # |   |   |   |   |      |         0110001111001101 | = | 25549 |   |   |    |    -39987 |
+#+TBLFM: @2$6=remote(tbl_bin_data_all_inv, @3$5)::@2$7=remote(tbl_bin_data_all_inv, @3$9)::@2$12=remote(tbl_x_data, @3$6)::@2$13=remote(tbl_x_data, @3$8)::@3$6=remote(tbl_bin_data_all_inv, @4$5)::@3$7=remote(tbl_bin_data_all_inv, @4$9)::@3$12=remote(tbl_x_data, @4$6)::@3$13=remote(tbl_x_data, @4$8)::@4$7=string("------------------------")::@4$13=string("---------")::@5$7='(org-sbe summ (first @2$7) (second @3$7) (size_b $BYTES))::@5$9='(org-sbe fromNToTen (value @5$7) (size_b $BYTES))::@5$13=@2$13 + @3$13
+
+CF = 1; PF = 0; AF = 0; ZF = 0; SF = 0; OF = 1\\
+При сложении двух отрицательных слагаемых получено положительное число. Результат выполнения операции неверный и некорректный, не совпадает с суммой десятичных эквивалентов.
+
+*** B1 + B8
+#+LATEX: \setlength{\tabcolsep}{3pt}
+#+NAME: tbl_h_data_inv
+#+ATTR_LATEX: :center nil
+| / |   |   |   |   |      |                          |   |        |   |   |    |           |
+| # |   |   |   |   | B1_2 |           11001001011101 |   |        |   |   | X1 |     12893 |
+| # |   |   |   | + | B9_2 |         1001100010111000 |   |        |   | + | X9 |    -26440 |
+| # |   |   |   |   |      | ------------------------ |   |        | = |   |    | --------- |
+| # |   |   |   |   |      |         1100101100010101 | = | -13547 |   |   |    |    -13547 |
+#+TBLFM: @2$6=remote(tbl_bin_data_all, @2$7)::@2$7=remote(tbl_bin_data_all, @2$9)::@2$12=remote(tbl_x_data, @2$3)::@2$13=remote(tbl_x_data, @2$5)::@3$6=remote(tbl_bin_data_all_inv, @4$5)::@3$7=remote(tbl_bin_data_all_inv, @4$9)::@3$12=remote(tbl_x_data, @4$6)::@3$13=remote(tbl_x_data, @4$8)::@4$7=string("------------------------")::@4$13=string("---------")::@5$7='(org-sbe summ (first @2$7) (second @3$7) (size_b $BYTES))::@5$9='(org-sbe fromNToTen (value @5$7) (size_b $BYTES))::@5$13=@2$13 + @3$13
+
+CF =0; PF = 0; AF = 1; ZF = 0; SF = 1; OF = 0\\
+При сложении отрицательного и положительного слагаемых получено отрицательное число. Результат выполнения операции верный и корректный, совпадает с суммой десятичных эквивалентов.
+
+*** B11 + B3
+#+LATEX: \setlength{\tabcolsep}{3pt}
+#+NAME: tbl_h_data_inv
+#+ATTR_LATEX: :center nil
+| / |   |   |   |   |       |                          |   |       |   |   |     |           |
+| # |   |   |   |   | B11_2 |         1111110101110010 |   |       |   |   | X11 |      -654 |
+| # |   |   |   | + | B3_2  |          110011101001000 |   |       |   | + | X3  |     26440 |
+| # |   |   |   |   |       | ------------------------ |   |       | = |   |     | --------- |
+| # |   |   |   |   |       |         0110010010111010 | = | 25786 |   |   |     |     25786 |
+#+TBLFM: @2$6=remote(tbl_bin_data_all_inv, @6$5)::@2$7=remote(tbl_bin_data_all_inv, @6$9)::@2$12=remote(tbl_x_data, @6$6)::@2$13=remote(tbl_x_data, @6$8)::@3$6=remote(tbl_bin_data_all, @4$7)::@3$7=remote(tbl_bin_data_all, @4$9)::@3$12=remote(tbl_x_data, @4$3)::@3$13=remote(tbl_x_data, @4$5)::@4$7=string("------------------------")::@4$13=string("---------")::@5$7='(org-sbe summ (first @2$7) (second @3$7) (size_b $BYTES))::@5$9='(org-sbe fromNToTen (value @5$7) (size_b $BYTES))::@5$13=@2$13 + @3$13
+
+CF = 1; PF = 0; AF = 0; ZF = 0; SF = 0; OF = 0\\
+При сложении отрицательного и положительного слагаемых получено отрицательное число. Результат выполнения операции верный и корректный, совпадает с суммой десятичных эквивалентов.
+
+* Вывод
+В ходе выполнения лабораторной работы я изучил как выполнять операции с двоичными числами на доп коде, написал прогрыммы на языке /Python/, которые это делают, а также изучил флаги состояния процессора.
