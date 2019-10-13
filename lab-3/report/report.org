@@ -6,11 +6,10 @@
 #+LATEX: \large
 #+LATEX: \thispagestyle{empty}
 #+BEGIN_CENTER
-*Санкт-Петербургский Национальный Исследовательский*\\
-*Университет Информационных Технологий, Механики и Оптики*\\
+*Национальный Исследовательский Университет ИТМО*\\
 *Факультет Программной Инженерии и Компьютерной Техники*\\
 #+END_CENTER
-#+LATEX: \vspace{1em}
+#+LATEX: \vspace{2em}
 #+ATTR_LATEX: :width 120pt
 #+ATTR_ORG: :width 120px
 file:../itmo-logo.png
