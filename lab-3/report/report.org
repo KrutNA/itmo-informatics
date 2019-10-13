@@ -1,0 +1,68 @@
+#+SETUPFILE: /home/krutna/.emacs.d/org-mode/itmo/main/setup.org
+#+SETUPFILE: /home/krutna/.emacs.d/org-mode/orgs/setup/setup.org
+#+LANGUAGE: ru
+#+AUTHOR: Krutko Nikita / KrutNA
+#+OPTIONS: toc:nil
+#+LATEX: \large
+#+LATEX: \thispagestyle{empty}
+#+BEGIN_CENTER
+*Санкт-Петербургский Национальный Исследовательский*\\
+*Университет Информационных Технологий, Механики и Оптики*\\
+*Факультет Программной Инженерии и Компьютерной Техники*\\
+#+END_CENTER
+#+LATEX: \vspace{1em}
+#+ATTR_LATEX: :width 120pt
+#+ATTR_ORG: :width 120px
+file:../itmo-logo.png
+#+LATEX: \LARGE
+#+LATEX: \vspace{5em}
+#+BEGIN_CENTER
+*Вариант № 14 % 9 = 5*\\
+*Лабораторная работа № 3*\\
+#+LATEX: \Large
+*по дисциплине*\\
+#+LATEX: \LARGE
+*/'Информатика'/*\\
+#+END_CENTER
+#+LATEX: \vspace{11em}
+#+LATEX: \large
+#+LATEX: \begin{flushright}
+*Выполнил:*\\
+*Студент группы P3113*\\
+*/Крутько Никита;/ : 242570*\\
+*Преподаватель:*\\
+*/Малышева Татьяна Алексеевна/*\\
+#+LATEX: \end{flushright}
+#+LATEX: \vspace{4em}
+#+LATEX: \large
+#+BEGIN_CENTER
+*Санкт-Петербург 2019 г.*
+#+END_CENTER
+#+LATEX: \pagebreak{}
+#+TOC: headlines 2
+#+LATEX: \normalsize
+* Задание
+** Файл
+- Создать следующего вида исходный файл из десяти строк, содержащий в каждой строке ФИО, дату рождения, дату получения паспорта и баллы ЕГЭ по трём предметам:
+#+LATEX: \scriptsize
+#+BEGIN_SRC shell :exports results :results output
+  cat ../file
+#+END_SRC
+
+** Заданиеи
+#+LATEX: \normalsize
+- Не используя готовые сторонние подключаемые функции для факториала, int(), bin() и т.п., написать программу на языке Python 3.x, которая бы вычисляла среднее значение баллов ЕГЭ, сортировала строки по указанной колонке в обратном порядке (от большего к меньшему) и выводила результат следующего вида (для сортировки по дате рождения):
+#+LATEX: \scriptsize
+#+ATTR_LATEX: :center
+
+#+BEGIN_SRC shell :exports results :results output
+  cat ../output
+#+END_SRC
+
+* Код Python
+#+LATEX: \scriptsize
+#+INCLUDE: ../main.py src python  
+
+* Вывод
+#+LATEX: \normalsize
+Немножко кода на питоне, ничего особенного
