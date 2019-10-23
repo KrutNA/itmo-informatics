@@ -129,11 +129,13 @@ if __name__ == "__main__":
     a = {"int": 666,
          "float": 666.777,
          "string": "String",
-         "array": ["a", 555, {"a": True}]}
+         "array": ["String", 0o666, {"1": True, "2": [0x666, 0o777]}],
+         "empty seq": [],
+         "empty map": {}}
     print("<<INPUT>>")
     print(a)
-    print("<<PRINTING JsonObject FORMATTED>>")
+    print("\n<<PRINTING JsonObject FORMATTED>>")
     print(JsonObject.from_normal(a).to_string(to_formated=True))
-    print("<<PRINTING JsonObject PLAIN>>")
+    print("\n<<PRINTING JsonObject PLAIN>>")
     print(JsonObject.from_normal(a).to_string())
-    print("<<<<END TESTING 'json_lib' MODULE>>>>")
+    print("\n<<<<END TESTING 'json_lib' MODULE>>>>")
