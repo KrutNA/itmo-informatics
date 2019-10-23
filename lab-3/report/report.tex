@@ -1,4 +1,4 @@
-% Created 2019-10-13 Вс 22:38
+% Created 2019-10-14 Пн 16:47
 % Intended LaTeX compiler: pdflatex
 \documentclass[11pt]{article}
 \usepackage[utf8]{inputenc}
@@ -75,9 +75,9 @@
 \tableofcontents
 \normalsize
 \section{Задание}
-\label{sec:orgf09ad0d}
+\label{sec:org8e82179}
 \subsection{Файл}
-\label{sec:org559666b}
+\label{sec:orgdd4dc55}
 \begin{itemize}
 \item Создать следующего вида исходный файл из десяти строк, содержащий в каждой строке ФИО, дату рождения, дату получения паспорта и баллы ЕГЭ по трём предметам:
 \end{itemize}
@@ -87,24 +87,36 @@
 Виноградов В.В. 09.03.1999 15.04.2013 67 99 98
 Яблоков Я.Я. 10.04.2000 19.05.2014 94 94 94
 Морковкин М.М. 11.05.1999 17.06.2013 91 82 73
+Жиноградов В.В. 09.03.1999 15.04.2013 67 99 98
+Сяблоков Я.Я. 10.04.2000 19.05.2014 94 94 94
+Рорковкин М.М. 11.05.1999 17.06.2013 91 82 73
+Диноградов В.В. 09.03.1999 15.04.2013 67 99 98
+Няблоков Я.Я. 10.04.2000 19.05.2014 94 94 94
+Корковкин М.М. 11.05.1999 17.06.2013 91 82 73
 \end{verbatim}
 
 \subsection{Заданиеи}
-\label{sec:orgaa3348c}
+\label{sec:orgf128ebb}
 \normalsize
 \begin{itemize}
 \item Не используя готовые сторонние подключаемые функции для факториала, int(), bin() и т.п., написать программу на языке Python 3.x, которая бы вычисляла среднее значение баллов ЕГЭ, сортировала строки по указанной колонке в обратном порядке (от большего к меньшему) и выводила результат следующего вида (для сортировки по дате рождения):
 \end{itemize}
 \scriptsize
 \begin{verbatim}
-Морковкин М.М. | 11.05.1999 | 17.06.2013 | 91 82 73 -> 82.000000
 Яблоков Я.Я. | 10.04.2000 | 19.05.2014 | 94 94 94 -> 94.000000
+Сяблоков Я.Я. | 10.04.2000 | 19.05.2014 | 94 94 94 -> 94.000000
+Рорковкин М.М. | 11.05.1999 | 17.06.2013 | 91 82 73 -> 82.000000
+Няблоков Я.Я. | 10.04.2000 | 19.05.2014 | 94 94 94 -> 94.000000
+Морковкин М.М. | 11.05.1999 | 17.06.2013 | 91 82 73 -> 82.000000
+Корковкин М.М. | 11.05.1999 | 17.06.2013 | 91 82 73 -> 82.000000
+Жиноградов В.В. | 09.03.1999 | 15.04.2013 | 67 99 98 -> 88.000000
+Диноградов В.В. | 09.03.1999 | 15.04.2013 | 67 99 98 -> 88.000000
 Виноградов В.В. | 09.03.1999 | 15.04.2013 | 67 99 98 -> 88.000000
 Апельсинов А.А. | 08.02.2000 | 17.03.2014 | 90 100 91 -> 93.666667
 \end{verbatim}
 
 \section{Код Python}
-\label{sec:org33f9800}
+\label{sec:org72fd0fa}
 \scriptsize
 \lstset{language=Python,label= ,caption= ,captionpos=b,numbers=none}
 \begin{lstlisting}
@@ -123,7 +135,7 @@ def sort(array, col=4, ascending=True):
     return sorted(array, key=lambda val: val[col], reverse=not ascending)
 
 
-def prnt(line):
+def print_formated(line):
     print("%s -> %f" % (' | '.join(line[:4]), line[4]))
 
 
@@ -131,13 +143,12 @@ if __name__ == '__main__':
     file = "file"
     with open(file, "r") as f:
 	result = list(map(lambda line: split(line.rstrip()), f.readlines()))
-    result = sort(result, 1, False)
-    print(result)
-    map(lambda line: prnt(line), result)
+    result = sort(result, 0, False)
+    list(map(print_formated, result))
 \end{lstlisting}
 
 \section{Вывод}
-\label{sec:org9e0eacf}
+\label{sec:orgafd301a}
 \normalsize
 Немножко кода на питоне, ничего особенного
 \end{document}

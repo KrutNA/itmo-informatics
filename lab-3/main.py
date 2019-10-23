@@ -13,7 +13,7 @@ def sort(array, col=4, ascending=True):
     return sorted(array, key=lambda val: val[col], reverse=not ascending)
 
 
-def prnt(line):
+def print_formated(line):
     print("%s -> %f" % (' | '.join(line[:4]), line[4]))
 
 
@@ -21,6 +21,5 @@ if __name__ == '__main__':
     file = "file"
     with open(file, "r") as f:
         result = list(map(lambda line: split(line.rstrip()), f.readlines()))
-    result = sort(result, 1, False)
-    print(result)
-    map(lambda line: prnt(line), result)
+    result = sort(result, 0, False)
+    list(map(print_formated, result))
