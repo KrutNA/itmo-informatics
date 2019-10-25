@@ -1,4 +1,5 @@
 from enum import Enum, auto
+from . import parser
 
 
 class JsonObject:
@@ -8,12 +9,12 @@ class JsonObject:
     def __init__(self, data):
         self._data = data
 
-    # def from_string(self, string):
-    #     """Converts string to JsonObject
-    #     Gets: string
-    #     Returns: JsonObject
-    #     """
-    #     return json_object
+    def from_string(self, string):
+        """Converts string to JsonObject
+        Gets: string
+        Returns: JsonObject
+        """
+        return parser.Parser(string).parse()
 
     def to_string(self, to_formated=False, tabs=1):
         """Converts JsonObject to string
@@ -39,7 +40,11 @@ class JsonObject:
 
 class Data:
     def __init__(self, data_type, data):
-        self._data, self._data_type = data, data_type
+        self._data, self._data_type, self._name = data, data_type, None
+
+    def with_name(self, name):
+        self._name = name
+        return self
 
     def get_name(self):
         return self._name
@@ -47,16 +52,19 @@ class Data:
     def normalized(self):
         if self._data_type == DataType.NULL:
             return None
-        elif self._data_type == DataType.NUMBER:
-            return float(self._data)
+        if self._data_type == DataType.NUMBER:
+            return (int(self._data)
+                    if int(self._data) == float(self._data)
+                    else float(self._data))
         elif self._data_type == DataType.STRING:
             return str(self._data)
         elif self._data_type == DataType.BOOLEAN:
             return bool(self._data)
         elif self._data_type == DataType.ARRAY:
             return [val.normalized() for val in self._data]
-        elif self._data == DataType.OBJECT:
-            return {(key, val.normalized()) for (key, val) in self._data}
+        elif self._data_type == DataType.OBJECT:
+            return dict((key, val.normalized())
+                        for (key, val) in self._data.items())
 
     def from_normal(obj):
         data_type = DataType.to_type(obj)
@@ -81,12 +89,12 @@ class Data:
                     [val.to_string(to_formated, tabs + 1)
                      for val in self._data]
                     if self._data_type == DataType.ARRAY
-                    else ["{}: {}".format(key, val.to_string(to_formated,
-                                                             tabs + 1))
+                    else ["'{}': {}".format(key, val.to_string(to_formated,
+                                                               tabs + 1))
                           for (key, val) in self._data.items()]),
                 ('' if not to_formated
                  else ('' if len(self._data) == 0
-                       else "\n")) + pre(tabs - 1) + end)
+                       else ("\n" + pre(tabs - 1)))) + end)
         if self._data_type == DataType.ARRAY:
             return format_obj('[', ']')
         elif self._data_type == DataType.OBJECT:
@@ -111,12 +119,12 @@ class DataType(Enum):
 
     def to_type(value):
         data_type = DataType.NULL
-        if isinstance(value, int) or isinstance(value, float):
+        if isinstance(value, bool):
+            data_type = DataType.BOOLEAN
+        elif isinstance(value, int) or isinstance(value, float):
             data_type = DataType.NUMBER
         elif isinstance(value, str):
             data_type = DataType.STRING
-        elif isinstance(value, bool):
-            data_type = DataType.BOOLEAN
         elif isinstance(value, type([])):
             data_type = DataType.ARRAY
         elif isinstance(value, type({})):
