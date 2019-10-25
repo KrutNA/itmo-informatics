@@ -1,0 +1,132 @@
+#+SETUPFILE: /home/krutna/.emacs.d/org-mode/orgs/setup/setup.org
+#+LANGUAGE: ru
+#+AUTHOR: Krutko Nikita / KrutNA
+#+OPTIONS: toc:nil
+#+LATEX: \large
+#+LATEX: \thispagestyle{empty}
+#+BEGIN_CENTER
+*Национальный Исследовательский Университет ИТМО*\\
+*Факультет Программной Инженерии и Компьютерной Техники*\\
+#+END_CENTER
+#+LATEX: \vspace{2em}
+#+ATTR_LATEX: :width 120pt
+#+ATTR_ORG: :width 120px
+file:./itmo-logo.png
+#+LATEX: \LARGE
+#+LATEX: \vspace{5em}
+#+BEGIN_CENTER
+*Вариант №(13%35)=13*\\
+*Лабораторная работа №4*\\
+#+LATEX: \Large
+*по дисциплине*\\
+#+LATEX: \LARGE
+*/Информатика'/*\\
+#+END_CENTER
+#+LATEX: \vspace{11em}
+#+LATEX: \large
+#+LATEX: \begin{flushright}
+*Выполнил:*\\
+*Студент группы P3113*\\
+*/Крутько Никита/ : 242570*\\
+*Преподаватель:*\\
+*/Малышева Татьяна Алексеевна/*\\
+#+LATEX: \end{flushright}
+#+LATEX: \vspace{4em}
+#+LATEX: \large
+#+BEGIN_CENTER
+*Санкт-Петербург 2019 г.*
+#+END_CENTER
+#+LATEX: \pagebreak{}
+#+TOC: headlines 2
+#+LATEX: \vspace{2em}
+#+BEGIN_EXPORT latex
+\colorlet{punct}{red!60!black}
+\definecolor{delim}{RGB}{20,105,176}
+\colorlet{numb}{magenta!60!black}
+\lstdefinelanguage{json}{
+    stepnumber=1,
+    numbersep=8pt,
+    showstringspaces=false,
+    breaklines=true,
+    keywords={true,false},
+    literate=
+     *{0}{{{\color{numb}0}}}{1}
+      {1}{{{\color{numb}1}}}{1}
+      {2}{{{\color{numb}2}}}{1}
+      {3}{{{\color{numb}3}}}{1}
+      {4}{{{\color{numb}4}}}{1}
+      {5}{{{\color{numb}5}}}{1}
+      {6}{{{\color{numb}6}}}{1}
+      {7}{{{\color{numb}7}}}{1}
+      {8}{{{\color{numb}8}}}{1}
+      {9}{{{\color{numb}9}}}{1}
+      {:}{{{\color{punct}{:}}}}{1}
+      {,}{{{\color{punct}{,}}}}{1}
+      {\{}{{{\color{delim}{\{}}}}{1}
+      {\}}{{{\color{delim}{\}}}}}{1}
+      {[}{{{\color{delim}{[}}}}{1}
+      {]}{{{\color{delim}{]}}}}{1},
+    morestring=[b]',
+    morestring=[b]"
+}
+\lstdefinelanguage{yaml}{
+  keywords={true,false,null,y,n},
+  keywordstyle=\color{darkgray}\bfseries,
+  ndkeywords={},
+  ndkeywordstyle=\color{black}\bfseries,
+  identifierstyle=\color{black},
+  sensitive=false,
+  comment=[l]{\#},
+  morecomment=[s]{/*}{*/},
+  morestring=[b]',
+  morestring=[b]"
+}
+#+END_EXPORT
+#+BEGIN_EXPORT latex
+\newfontfamily\lstcomment[Scale=0.6]{Fira Mono Regular Italic}
+\newfontfamily\lstbasic[Scale=0.8,Contextuals=Alternate,Ligatures={TeX}]{Fira Code Regular}
+\newfontfamily\lstit[Scale=0.8]{Fira Mono Regular Italic}
+\lstset{
+  frame = shadowbox,
+  commentstyle = \lstcomment\small,
+  basicstyle = \lstbasic\small,
+  numberstyle = \lstbasic\tiny,numbers=left,
+  stringstyle = \lstit\small
+}
+#+END_EXPORT
+* Задание
+1. Исходя из структуры расписания конкретного дня, сформировать файл с расписанием в формате, указанном в задании в качестве исходного.
+2. Написать программу на языке Python 3.x, которая бы осуществляла парсинг и конвертацию исходного файла в новый.
+3. Нельзя использовать готовые библиотеки, кроме re (регулярные выражения в Python) и библиотеки для загрузки XML-файлов.
+4. Необязательное задание для получения оценки «4» и «5» (позволяет набрать от 75 до 89 процентов от максимального числа баллов БаРС за данную лабораторную).
+   1) Найти готовые библиотеки, осуществляющие аналогичный парсинг и конвертацию файлов.
+   2) Сравнить полученные результаты и объяснить их сходство/различие.
+5. Необязательное задание для получения оценки «5» (позволяет набратьот 90 до 100 процентов от максимального числа баллов БаРС за данную лабораторную).
+   1) Используя свою программу и найденные готовые библиотеки, сравнить десятикратное время выполнения парсинга + конвертации в цикле.
+   2) Проанализировать полученные результаты и объяснить их сходство/различие.
+#+CAPTION: Вариант задания
+| № варианта | Исходный формат | Результирующий формат | День недели |
+|         13 | JSON            | YAML                  | Среда       |
+
+* Исходный файл JSON
+#+LATEX: \scriptsize
+#+INCLUDE: ../schedule.json src json
+
+* Исходный код Python
+** json_lib
+#+CAPTION: __init__.py
+#+INCLUDE: ../json_lib/__init__.py src python
+
+#+CAPTION: parser.py
+#+INCLUDE: ../json_lib/parser.py src python
+
+** yaml_lib
+#+CAPTION: __init__.py
+#+INCLUDE: ../yaml_lib/__init__.py src python
+
+* Результирующий файл YAML
+#+INCLUDE: ../schedule.yaml src yaml
+* Вывод
+#+LATEX: \normalsize
+Много кода на Python и довольно удачный парсер JSON через регулярки, в принципе должен нормально сжевать и переварить любой JSON файл, в случае, если не может распарсить его (т.е. если файл не валидный), то кидает эксепшн ValueError.
+Также сделал небольшие настройки для YAML и JSON
