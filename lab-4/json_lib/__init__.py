@@ -53,7 +53,9 @@ class Data:
         if self._data_type == DataType.NULL:
             return None
         if self._data_type == DataType.NUMBER:
-            return float(self._data)
+            return (int(self._data)
+                    if int(self._data) == float(self._data)
+                    else float(self._data))
         elif self._data_type == DataType.STRING:
             return str(self._data)
         elif self._data_type == DataType.BOOLEAN:
