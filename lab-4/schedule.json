@@ -1,0 +1,33 @@
+{
+    "day_id": 3,
+    "group_id": "p3113",
+    "schedule": [
+	{
+	    "id": 25,
+	    "type_id": 0,
+	    "is_even": null,
+	    "time_id": 1,
+	    "campus_id": 2,
+	    "auditory_id": 2219,
+	    "personality_id": 153941
+	},
+	{
+	    "id": 32,
+	    "type_id": 1,
+	    "is_even": null,
+	    "time_id": 2,
+	    "campus_id": 2,
+	    "auditory_id": null,
+	    "personality_id": null
+	},
+	{
+	    "id": 25,
+	    "type_id": 1,
+	    "is_even": null,
+	    "time_id": 3,
+	    "campus_id": 2,
+	    "auditory_id": 1122,
+	    "personality_id": 178308
+	}
+    ]
+}
