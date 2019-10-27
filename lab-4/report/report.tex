@@ -1,4 +1,4 @@
-% Created 2019-10-25 Пт 16:30
+% Created 2019-10-27 Вс 01:23
 % Intended LaTeX compiler: pdflatex
 \documentclass[11pt]{article}
 \usepackage[utf8]{inputenc}
@@ -54,7 +54,7 @@
 \Large
 \textbf{по дисциплине}\\
 \LARGE
-\textbf{\emph{Информатика'}}\\
+\textbf{\emph{'Информатика'}}\\
 \end{center}
 \vspace{11em}
 \large
@@ -126,7 +126,7 @@
   stringstyle = \lstit\small
 }
 \section{Задание}
-\label{sec:orgba9ed7e}
+\label{sec:orgbe067c2}
 \begin{enumerate}
 \item Исходя из структуры расписания конкретного дня, сформировать файл с расписанием в формате, указанном в задании в качестве исходного.
 \item Написать программу на языке Python 3.x, которая бы осуществляла парсинг и конвертацию исходного файла в новый.
@@ -152,7 +152,7 @@
 \end{table}
 
 \section{Исходный файл JSON}
-\label{sec:org0da2fc2}
+\label{sec:org72288bc}
 \scriptsize
 \lstset{language=json,label= ,caption= ,captionpos=b,numbers=none}
 \begin{lstlisting}
@@ -173,7 +173,7 @@
 	    "id": 32,
 	    "type_id": 1,
 	    "is_even": null,
-	    "time_id": 2,
+	    "time_id": 2w,
 	    "campus_id": 2,
 	    "auditory_id": null,
 	    "personality_id": null
@@ -192,10 +192,10 @@
 \end{lstlisting}
 
 \section{Исходный код Python}
-\label{sec:org29eb5d3}
-\subsection{json\(_{\text{lib}}\)}
-\label{sec:org501f013}
-\lstset{language=Python,label= ,caption={\_\(_{\text{init}}\)\_\(_{\text{.py}}\)},captionpos=b,numbers=none}
+\label{sec:org48bbd5e}
+\subsection{json\_lib}
+\label{sec:org506b092}
+\lstset{language=Python,label= ,caption={\_\_init\_\_.py},captionpos=b,numbers=none}
 \begin{lstlisting}
 from enum import Enum, auto
 from . import parser
@@ -454,8 +454,8 @@ class Parser:
 		self._match.groupdict()['name']))
 
 	elif self._head_type == jl.DataType.OBJECT:
-	    self._stack[-1]._data[self._match.groupdict()
-				  ['name'][1:-1]] = string_to_jsonobj(data_type)
+	    self._stack[-1]._data[self._match.groupdict()['name'][1:-1]] = (
+		string_to_jsonobj(data_type))
 
 	elif self._head_type == jl.DataType.ARRAY and (
 		data_type in [jl.DataType.ARRAY, jl.DataType.OBJECT]):
@@ -491,9 +491,9 @@ class DataRegex:
 	}
 \end{lstlisting}
 
-\subsection{yaml\(_{\text{lib}}\)}
-\label{sec:orgeba3e80}
-\lstset{language=Python,label= ,caption={\_\(_{\text{init}}\)\_\(_{\text{.py}}\)},captionpos=b,numbers=none}
+\subsection{yaml\_lib}
+\label{sec:orgcdddfa3}
+\lstset{language=Python,label= ,caption={\_\_init\_\_.py},captionpos=b,numbers=none}
 \begin{lstlisting}
 from enum import Enum, auto
 
@@ -657,7 +657,7 @@ if __name__ == "__main__":
 \end{lstlisting}
 
 \section{Результирующий файл YAML}
-\label{sec:org9ba754c}
+\label{sec:orgae15bd6}
 \lstset{language=yaml,label= ,caption= ,captionpos=b,numbers=none}
 \begin{lstlisting}
 day_id: 3
@@ -686,7 +686,7 @@ schedule:
     personality_id: 178308
 \end{lstlisting}
 \section{Вывод}
-\label{sec:orgafbed7d}
+\label{sec:org2b84d86}
 \normalsize
 Много кода на Python и довольно удачный парсер JSON через регулярки, в принципе должен нормально сжевать и переварить любой JSON файл, в случае, если не может распарсить его (т.е. если файл не валидный), то кидает эксепшн ValueError.
 Также сделал небольшие настройки для YAML и JSON

@@ -2,6 +2,7 @@
 #+LANGUAGE: ru
 #+AUTHOR: Krutko Nikita / KrutNA
 #+OPTIONS: toc:nil
+#+OPTIONS: ^:nil
 #+LATEX: \large
 #+LATEX: \thispagestyle{empty}
 #+BEGIN_CENTER
@@ -20,7 +21,7 @@ file:./itmo-logo.png
 #+LATEX: \Large
 *по дисциплине*\\
 #+LATEX: \LARGE
-*/Информатика'/*\\
+*/'Информатика'/*\\
 #+END_CENTER
 #+LATEX: \vspace{11em}
 #+LATEX: \large

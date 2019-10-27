@@ -102,8 +102,8 @@ class Parser:
                 self._match.groupdict()['name']))
 
         elif self._head_type == jl.DataType.OBJECT:
-            self._stack[-1]._data[self._match.groupdict()
-                                  ['name'][1:-1]] = string_to_jsonobj(data_type)
+            self._stack[-1]._data[self._match.groupdict()['name'][1:-1]] = (
+                string_to_jsonobj(data_type))
 
         elif self._head_type == jl.DataType.ARRAY and (
                 data_type in [jl.DataType.ARRAY, jl.DataType.OBJECT]):
