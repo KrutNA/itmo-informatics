@@ -75,7 +75,7 @@ class Data:
                         for (key, val) in obj.items())
         return Data(data_type, data)
 
-    def to_string(self, tabs=0):
+    def to_string(self, tabs=0, pre_map=''):
         def pre(tabs):
             return "  " * tabs
 
@@ -83,27 +83,28 @@ class Data:
              self._data_type == DataType.MAP) and len(self._data) == 0):
             return "[]" if self._data_type == DataType.SEQ else "{}"
         elif self._data_type == DataType.SEQ:
-            return '\n' + '\n'.join(["{}- {}".format(pre(tabs),
-                                                     val.to_string(tabs + 1))
-                                     for val in self._data])
+            return '' if tabs == 0 else '\n' + '\n'.join(
+                ["{}- {}".format(pre(tabs - 1),
+                                 val.to_string(tabs))
+                 for val in self._data]) + '\n'
         elif self._data_type == DataType.MAP:
                 return '\n{}'.format(pre(tabs)).join(
-                    ["{}: {}".format(key, val.to_string(tabs + 1))
+                    ["{}:{}".format(key, val.to_string(tabs + 1, pre_map=' '))
                      for (key, val) in self._data.items()])
         elif self._data_type == DataType.NULL:
-            return "Null"
+            return pre_map + "null"
         elif self._data_type == DataType.STR:
             if len(self._data.split('\n')) > 1:
-                return "|\n" + '\n'.join(pre(tabs + 1) + val
-                                         for val in self._data.split('\n'))
+                return " |\n" + '\n'.join(pre(tabs + 1) + val
+                                          for val in self._data.split('\n'))
             else:
-                return self._data
+                return pre_map + self._data
         elif self._data_type == DataType.INT_8:
-            return str(oct(self._data))
+            return pre_map + str(oct(self._data))
         elif self._data_type == DataType.INT_16:
-            return str(hex(self._data))
+            return pre_map + str(hex(self._data))
         else:
-            return str(self._data)
+            return pre_map + str(self._data)
 
 
 class DataType(Enum):
