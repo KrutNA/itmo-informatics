@@ -1,4 +1,4 @@
-% Created 2019-10-27 Вс 01:23
+% Created 2019-10-28 Пн 02:33
 % Intended LaTeX compiler: pdflatex
 \documentclass[11pt]{article}
 \usepackage[utf8]{inputenc}
@@ -126,7 +126,7 @@
   stringstyle = \lstit\small
 }
 \section{Задание}
-\label{sec:orgbe067c2}
+\label{sec:orge348f62}
 \begin{enumerate}
 \item Исходя из структуры расписания конкретного дня, сформировать файл с расписанием в формате, указанном в задании в качестве исходного.
 \item Написать программу на языке Python 3.x, которая бы осуществляла парсинг и конвертацию исходного файла в новый.
@@ -152,7 +152,7 @@
 \end{table}
 
 \section{Исходный файл JSON}
-\label{sec:org72288bc}
+\label{sec:orgedb800e}
 \scriptsize
 \lstset{language=json,label= ,caption= ,captionpos=b,numbers=none}
 \begin{lstlisting}
@@ -173,7 +173,7 @@
 	    "id": 32,
 	    "type_id": 1,
 	    "is_even": null,
-	    "time_id": 2w,
+	    "time_id": 2,
 	    "campus_id": 2,
 	    "auditory_id": null,
 	    "personality_id": null
@@ -192,9 +192,9 @@
 \end{lstlisting}
 
 \section{Исходный код Python}
-\label{sec:org48bbd5e}
+\label{sec:org41a196a}
 \subsection{json\_lib}
-\label{sec:org506b092}
+\label{sec:org780ed7e}
 \lstset{language=Python,label= ,caption={\_\_init\_\_.py},captionpos=b,numbers=none}
 \begin{lstlisting}
 from enum import Enum, auto
@@ -492,7 +492,7 @@ class DataRegex:
 \end{lstlisting}
 
 \subsection{yaml\_lib}
-\label{sec:orgcdddfa3}
+\label{sec:org50fbbee}
 \lstset{language=Python,label= ,caption={\_\_init\_\_.py},captionpos=b,numbers=none}
 \begin{lstlisting}
 from enum import Enum, auto
@@ -572,7 +572,7 @@ class Data:
 			for (key, val) in obj.items())
 	return Data(data_type, data)
 
-    def to_string(self, tabs=0):
+    def to_string(self, tabs=0, pre_map=''):
 	def pre(tabs):
 	    return "  " * tabs
 
@@ -580,27 +580,28 @@ class Data:
 	     self._data_type == DataType.MAP) and len(self._data) == 0):
 	    return "[]" if self._data_type == DataType.SEQ else "{}"
 	elif self._data_type == DataType.SEQ:
-	    return '\n' + '\n'.join(["{}- {}".format(pre(tabs),
-						     val.to_string(tabs + 1))
-				     for val in self._data])
+	    return '' if tabs == 0 else '\n' + '\n'.join(
+		["{}- {}".format(pre(tabs - 1),
+				 val.to_string(tabs))
+		 for val in self._data]) + '\n'
 	elif self._data_type == DataType.MAP:
 		return '\n{}'.format(pre(tabs)).join(
-		    ["{}: {}".format(key, val.to_string(tabs + 1))
+		    ["{}:{}".format(key, val.to_string(tabs + 1, pre_map=' '))
 		     for (key, val) in self._data.items()])
 	elif self._data_type == DataType.NULL:
-	    return "Null"
+	    return pre_map + "null"
 	elif self._data_type == DataType.STR:
 	    if len(self._data.split('\n')) > 1:
-		return "|\n" + '\n'.join(pre(tabs + 1) + val
-					 for val in self._data.split('\n'))
+		return " |\n" + '\n'.join(pre(tabs + 1) + val
+					  for val in self._data.split('\n'))
 	    else:
-		return self._data
+		return pre_map + self._data
 	elif self._data_type == DataType.INT_8:
-	    return str(oct(self._data))
+	    return pre_map + str(oct(self._data))
 	elif self._data_type == DataType.INT_16:
-	    return str(hex(self._data))
+	    return pre_map + str(hex(self._data))
 	else:
-	    return str(self._data)
+	    return pre_map + str(self._data)
 
 
 class DataType(Enum):
@@ -657,36 +658,36 @@ if __name__ == "__main__":
 \end{lstlisting}
 
 \section{Результирующий файл YAML}
-\label{sec:orgae15bd6}
+\label{sec:org219611e}
 \lstset{language=yaml,label= ,caption= ,captionpos=b,numbers=none}
 \begin{lstlisting}
 day_id: 3
 group_id: p3113
-schedule: 
-  - id: 25
-    type_id: 0
-    is_even: Null
-    time_id: 1
-    campus_id: 2
-    auditory_id: 2219
-    personality_id: 153941
-  - id: 32
-    type_id: 1
-    is_even: Null
-    time_id: 2
-    campus_id: 2
-    auditory_id: Null
-    personality_id: Null
-  - id: 25
-    type_id: 1
-    is_even: Null
-    time_id: 3
-    campus_id: 2
-    auditory_id: 1122
-    personality_id: 178308
+schedule:
+- id: 25
+  type_id: 0
+  is_even: null
+  time_id: 1
+  campus_id: 2
+  auditory_id: 2219
+  personality_id: 153941
+- id: 32
+  type_id: 1
+  is_even: null
+  time_id: 2
+  campus_id: 2
+  auditory_id: null
+  personality_id: null
+- id: 25
+  type_id: 1
+  is_even: null
+  time_id: 3
+  campus_id: 2
+  auditory_id: 1122
+  personality_id: 178308
 \end{lstlisting}
 \section{Вывод}
-\label{sec:org2b84d86}
+\label{sec:org50e832f}
 \normalsize
 Много кода на Python и довольно удачный парсер JSON через регулярки, в принципе должен нормально сжевать и переварить любой JSON файл, в случае, если не может распарсить его (т.е. если файл не валидный), то кидает эксепшн ValueError.
 Также сделал небольшие настройки для YAML и JSON
